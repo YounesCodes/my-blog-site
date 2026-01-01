@@ -2,14 +2,14 @@ disabled = false
 languageCode = "en"
 languageName = "English"
 weight = 1
-title = "Blowfish"
+title = "youneswashere"
 
 [params]
   displayName = "EN"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "/img/cat.jpg"
+  logo = ""
   # secondaryLogo = "img/secondary-logo.png"
   # description = "My awesome website"
   # copyright = "Copy, _right?_ :thinking_face:"
@@ -17,10 +17,10 @@ title = "Blowfish"
 [params.author]
   name = "Bouatmani Younes"
   email = "younesbouatmani1@gmail.com"
-  image = "/img/cat.jpg"
+  image = "img/cat.jpg"
   imageQuality = 96
   headline = "Cybersecurity and Cloud Engineering student"
-  bio = "A little bit about you"
+  bio = "Cybersecurity and Cloud Engineering student"
   links = [
      { email = "mailto:younesbouatmani1@gmail.com" },
 #     { link = "https://link-to-some-website.com/" },
@@ -74,3 +74,17 @@ title = "Blowfish"
 #     { ko-fi = "https://ko-fi.com/username" },
 #     { codeberg = "https://codeberg.org/username"},   
   ]
+
+[menu]
+
+  [[menu.main]]
+    identifier = "blogs"
+    name = "Blogs"
+    url = "/posts/"
+    weight = 1
+
+  [[menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume/"
+    weight = 2

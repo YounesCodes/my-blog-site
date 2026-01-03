@@ -1,7 +1,7 @@
 ---
 title: "How I built my own home cloud storage with NextCloud"
 layout: ""
-description: "..."
+date: 2026-01-02
 ---
 
 In this article, I will guide you through building your own home cloud storage using Nextcloud.

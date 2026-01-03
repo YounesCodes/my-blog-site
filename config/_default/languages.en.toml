@@ -2,7 +2,7 @@ disabled = false
 languageCode = "en"
 languageName = "English"
 weight = 1
-title = "youneswashere"
+title = "Younes"
 
 [params]
   displayName = "EN"
@@ -78,13 +78,19 @@ title = "youneswashere"
 [menu]
 
   [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 1
+
+  [[menu.main]]
     identifier = "blogs"
     name = "Blogs"
     url = "/posts/"
-    weight = 1
+    weight = 2
 
   [[menu.main]]
     identifier = "resume"
     name = "Resume"
     url = "/resume/"
-    weight = 2
+    weight = 3

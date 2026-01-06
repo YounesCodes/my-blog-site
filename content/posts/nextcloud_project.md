@@ -16,7 +16,9 @@ Before we start, we need a couple things:
 *   Your main PC/laptop (for configuration)
 *   A domain name (optional, only if you want remote access outside your home network)
 
-**1. Install and configure Ubuntu server**
+
+
+# **1. Install and configure Ubuntu server**
 -------------------------------------------
 
 **Ubuntu Server official install documentation :** [https://ubuntu.com/tutorials/install-ubuntu-server#1-overview](https://ubuntu.com/tutorials/install-ubuntu-server#1-overview)
@@ -62,7 +64,9 @@ sudo ufw enable
 
 > **Note:** You must open these ports now so your main laptop can reach the Nextcloud web interface for the initial setup. If you later decide to configure the **Cloudflare Tunnel** for remote access, you can choose to close ports 80 and 443 for maximum security, ssh must remain accessible on the local network. Do not expose it publicly unless required.
 
-**2. Install Nextcloud**
+
+
+# **2. Install Nextcloud**
 -------------------------
 
 I chose a snap installation (easiest to set up), you can go for that or the docker image option. I will only cover the snap installation process.
@@ -103,7 +107,9 @@ Congratulations, you now have a fully operational local storage server, if you w
 
 If not, let’s continue.
 
-**3. Remote access**
+
+
+# **3. Remote access**
 ---------------------
 
 In this section, we will configure a Cloudflare Tunnel to make our home server accessible from outside our network.
@@ -114,7 +120,7 @@ Next, go to [https://dash.cloudflare.com/](https://dash.cloudflare.com/), create
 
 ![captionless image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Sj5TneJqAxvzgtPKyjzGng.png)
 
-Enter your domain name, leave everything else on default and click on continue :
+Enter your domain name, leave everything else on default and click continue :
 
 ![captionless image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*--K6KBYMraXo3x3x7ym10Q.png)
 
@@ -130,7 +136,7 @@ You will be redirected to the last step of the setup, where you will have to cop
 
 ![captionless image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*CccBmzx8zm7kakUfnwuagA.png)
 
-If you used Namecheap to purchase a domain, go to your dashboard, click on ‘_Manage_’ next to your domain, then scroll down until you see nameservers and change it to ‘_custom DNS_’ then paste the Cloudflare nameservers (Step 2's _DNSSEC_ is disabled by default on Namecheap):
+If you used Namecheap to purchase a domain, go to your dashboard, click on ‘_Manage_’ next to your domain, then scroll down until you see nameservers and change it to ‘_custom DNS_’ then paste the Cloudflare nameservers (Step 2's _DNSSEC_ is disabled by default on Namecheap) :
 
 ![captionless image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*LhpnyNI0yXRDZ20wqjXXhA.png)
 
@@ -138,7 +144,7 @@ After some time, Cloudflare will verify that you successfully added the nameserv
 
 With that, Cloudflare will become the authoritative DNS, and traffic can be proxied and protected.
 
-Before moving on to the tunnel, ensure that Cloudflare SSL/TLS mode is set to Full, if not click on Configure and change it (**Full** is required because Nextcloud Snap uses a self-signed certificate, **Full (Strict)** would require installing a valid origin certificate):
+Before moving on to the tunnel, ensure that Cloudflare SSL/TLS mode is set to Full, if not click on Configure and change it (**Full** is required because Nextcloud Snap uses a self-signed certificate, **Full (Strict)** would require installing a valid origin certificate) :
 
 ![captionless image](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*RE4lqgjuaAbJLQSlGXpEbA.png)
 
@@ -261,7 +267,8 @@ You should be able to access your server now via the browser by typing in your d
 
 Congratulations! You have made your first step into homelabbing, you successfully implemented a **secure remote access architecture,** I hope you will enjoy it!
 
-**4. What’s Next?**
+
+# **4. What’s Next?**
 ----------------
 
 Now that your cloud is live, here are a few more things you can explore:

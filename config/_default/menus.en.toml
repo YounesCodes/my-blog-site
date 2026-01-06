@@ -10,6 +10,28 @@
 # overridden by providing a weight value. The menu will then be
 # ordered by weight from lowest to highest.
 
+
+
+  [[main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 1
+
+  [[main]]
+    identifier = "blogs"
+    name = "Blogs"
+    url = "/posts/"
+    weight = 2
+
+  [[main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume.pdf"
+    pre = "file-pdf"
+    weight = 3
+
+
 #[[main]]
 #  name = "Blog"
 #  pageRef = "posts"

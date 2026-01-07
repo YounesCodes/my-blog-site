@@ -1,5 +1,5 @@
 ---
-title: "How I built my own home cloud storage with NextCloud"
+title: "How I Built My Own Home Cloud Storage With NextCloud"
 layout: ""
 date: 2026-01-02
 ---

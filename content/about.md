@@ -3,14 +3,12 @@ title: "About Me"
 layout: "simple"
 description: ""
 ---
-<br>
 
 ## `Whoami`
 
 Hello, I'm Younes, a Cybersecurity and Cloud Engineering student based in Casablanca, Morocco.
 
 
-<br>
 
 ## `Purpose` 
 

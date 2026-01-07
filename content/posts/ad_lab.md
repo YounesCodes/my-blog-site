@@ -160,7 +160,7 @@ Windows clients, even if IPv4-only try to fetch `wpad.dat`. When they do, they s
 
 ![](https://younescodes.github.io/my-blog-site/assets/mitm1.png)
 
-**Step 2 :**   Start mitm6 via `mitm6 -d homelab.local
+**Step 2 :**   Start mitm6 via `mitm6 -d homelab.local`
 
 ![](https://younescodes.github.io/my-blog-site/assets/mitm2.png)
 

